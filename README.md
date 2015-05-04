@@ -22,7 +22,11 @@ Requirements
 Installation
 ------------
 
-1. Just add Localpoint.framework to your Xcode project.
+Phunware recommends using CocoaPods to integrate the framework. Simply add pod 'PWLocalpoint' to your podfile.
+
+Alternatively, you can follow the next steps:
+
+1. Add Localpoint.framework to your Xcode project.
 2. In your build settings, verify that the `Framework Search Paths` has an entry for pointing to the Localpoing.framework folder. For example: `$(PROJECT_DIR)/Vendor/Phunware/Localpoint`.
 
 3. The following iOS frameworks are required:
@@ -37,15 +41,15 @@ libsqlite3.lib
 Set Up
 ------------
 Add the following key/value to you app Info.plist file:
-````
-Required background modes 
-	Value1: App registers for location updates. This will allow your application to get location updates in the background.
-	Value2: App downloads content from the network. Note: The addition of this row is only for 2.4.0+ versions of our SDK.
-LPServer; Value: sandbox for testing and api for production.
-LPAppID; Value: application ID matching the server choice.
-LPBrand; Value: your brand name.
-NSLocationAlwaysUsageDescription; Value: whatever you want to display on the prompted alert when granting to use GPS location service.
-````
+
+* Required background modes:
+	- `App registers for location updates` This value will allow the app to keep users informed of their location, even while it is running in the background.
+	- `App downloads content from the network` This value will allow the app to regularly download and processes small amounts of content from the network. The addition of this value is only required for 2.4.0+ versions of our SDK.
+* LPServer :  The environment you will be working on. This value used can be `sandbox` for testing and `api` for production.
+* LPAppID : The application ID matching the server choice.
+* LPBrand :  Your brand name.
+* NSLocationAlwaysUsageDescription: The message you want to display on the prompted alert when the user grants the app permission to use the location service.
+
 
 
 
@@ -76,7 +80,7 @@ Localpoint SDK is always running in background, and none of UI view can be found
 
 ### Subscribe location events callback
 
-Localpoint provide a ILPLocationListener interface, you just need to implement the methods and register it in LPLocationProvider.
+Localpoint provides a `ILPLocationListener` protocol. You can create a listener that implements the protocol's methods and register your listener with the Localpoint SDK's location provider.
 
 ````objective-c
 	LPLocationListener *locationListener = [[LPLocationListener alloc] init];
@@ -87,7 +91,7 @@ Localpoint provide a ILPLocationListener interface, you just need to implement t
 
 ### Subscribe message events callback
 
-Localpoint provide a ILPMessageListener interface, you just need to implement the methods and register it in LPMessageProvider.
+Localpoint provides a `ILPMessageListener` protocol.  You can create a listener that implements the protocol's methods and register your listener with the Localpoint SDK's message provider.
 
 ````objective-c
 	LPMessageListener *messageListener = [[LPMessageListener alloc] init];
@@ -98,7 +102,8 @@ Localpoint provide a ILPMessageListener interface, you just need to implement th
 
 ### Custom local notification callback
 
-Localpoint provide a ILPLocalNotificationListener interface, you just need to implement the methods and set it to LPLocalpointService.
+Localpoint provides a `ILPLocalNotificationListener` protocol.  You can create a listener that implements the protocol's methods and set the listener in your `LPLocalpointService` instance.
+
 
 ````objective-c
 	LPLocalNotificationListener *localNotificationListener = [[LPLocalNotificationListener alloc] init];
